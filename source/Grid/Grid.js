@@ -1035,6 +1035,7 @@ class Grid extends React.PureComponent<Props, State> {
       totalRowsHeight + horizontalScrollBarSize <= height ? 'hidden' : 'auto';
 
     const childrenToDisplay = this._childrenToDisplay;
+    const stickyContent = this._childrenStickyContentToDisplay;
 
     const showNoContentRenderer =
       childrenToDisplay.length === 0 && height > 0 && width > 0;
@@ -1072,6 +1073,7 @@ class Grid extends React.PureComponent<Props, State> {
           </div>
         )}
         {showNoContentRenderer && noContentRenderer()}
+        {stickyContent}
       </div>
     );
   }
@@ -1085,6 +1087,7 @@ class Grid extends React.PureComponent<Props, State> {
     const {
       cellRenderer,
       cellRangeRenderer,
+      stickyContentCellRenderer,
       columnCount,
       deferredMeasurementCache,
       height,
@@ -1242,6 +1245,31 @@ class Grid extends React.PureComponent<Props, State> {
         visibleColumnIndices,
         visibleRowIndices,
       });
+
+      if (stickyContentCellRenderer) {
+        this._childrenStickyContentToDisplay = cellRangeRenderer({
+          cellCache: this._cellCache,
+          stickyContentCellRenderer,
+          columnSizeAndPositionManager:
+            instanceProps.columnSizeAndPositionManager,
+          columnStartIndex,
+          columnStopIndex,
+          deferredMeasurementCache,
+          horizontalOffsetAdjustment,
+          isScrolling,
+          isScrollingOptOut,
+          parent: this,
+          rowSizeAndPositionManager: instanceProps.rowSizeAndPositionManager,
+          rowStartIndex,
+          rowStopIndex,
+          scrollLeft,
+          scrollTop,
+          styleCache: this._styleCache,
+          verticalOffsetAdjustment,
+          visibleColumnIndices,
+          visibleRowIndices,
+        });
+      }
 
       // update the indices
       this._columnStartIndex = columnStartIndex;
