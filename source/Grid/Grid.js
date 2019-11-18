@@ -1042,40 +1042,42 @@ class Grid extends React.PureComponent<Props, State> {
       childrenToDisplay.length === 0 && height > 0 && width > 0;
 
     return (
-      <div
-        ref={this._setScrollingContainerRef}
-        {...containerProps}
-        aria-label={this.props['aria-label']}
-        aria-readonly={this.props['aria-readonly']}
-        className={clsx('ReactVirtualized__Grid', className)}
-        id={id}
-        onScroll={this._onScroll}
-        role={role}
-        style={{
-          ...gridStyle,
-          ...style,
-        }}
-        tabIndex={tabIndex}>
-        {childrenToDisplay.length > 0 && (
-          <div
-            className="ReactVirtualized__Grid__innerScrollContainer"
-            role={containerRole}
-            style={{
-              width: autoContainerWidth ? 'auto' : totalColumnsWidth,
-              height: totalRowsHeight,
-              maxWidth: totalColumnsWidth,
-              maxHeight: totalRowsHeight,
-              overflow: 'hidden',
-              pointerEvents: isScrolling ? 'none' : '',
-              position: 'relative',
-              ...containerStyle,
-            }}>
-            {childrenToDisplay}
-          </div>
-        )}
-        {showNoContentRenderer && noContentRenderer()}
+      <>
+        <div
+          ref={this._setScrollingContainerRef}
+          {...containerProps}
+          aria-label={this.props['aria-label']}
+          aria-readonly={this.props['aria-readonly']}
+          className={clsx('ReactVirtualized__Grid', className)}
+          id={id}
+          onScroll={this._onScroll}
+          role={role}
+          style={{
+            ...gridStyle,
+            ...style,
+          }}
+          tabIndex={tabIndex}>
+          {childrenToDisplay.length > 0 && (
+            <div
+              className="ReactVirtualized__Grid__innerScrollContainer"
+              role={containerRole}
+              style={{
+                width: autoContainerWidth ? 'auto' : totalColumnsWidth,
+                height: totalRowsHeight,
+                maxWidth: totalColumnsWidth,
+                maxHeight: totalRowsHeight,
+                overflow: 'hidden',
+                pointerEvents: isScrolling ? 'none' : '',
+                position: 'relative',
+                ...containerStyle,
+              }}>
+              {childrenToDisplay}
+            </div>
+          )}
+          {showNoContentRenderer && noContentRenderer()}
+        </div>
         {stickyContent}
-      </div>
+      </>
     );
   }
 
