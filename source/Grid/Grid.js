@@ -81,6 +81,7 @@ type Props = {
 
   /** Responsible for rendering a cell given an row and column index.  */
   cellRenderer: CellRenderer,
+  stickyContentCellRenderer: CellRenderer,
 
   /** Responsible for rendering a group of cells given their index ranges.  */
   cellRangeRenderer: CellRangeRenderer,
@@ -1249,7 +1250,7 @@ class Grid extends React.PureComponent<Props, State> {
       if (stickyContentCellRenderer) {
         this._childrenStickyContentToDisplay = cellRangeRenderer({
           cellCache: this._cellCache,
-          stickyContentCellRenderer,
+          cellRenderer: stickyContentCellRenderer,
           columnSizeAndPositionManager:
             instanceProps.columnSizeAndPositionManager,
           columnStartIndex,
