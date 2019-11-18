@@ -1,7 +1,7 @@
 {
   "name": "react-virtualized-sticky-content",
   "description": "React components for efficiently rendering large, scrollable lists and tabular data",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/Mexanik72/react-virtualized",
   "main": "dist/commonjs/index.js",
   "module": "dist/es/index.js",
