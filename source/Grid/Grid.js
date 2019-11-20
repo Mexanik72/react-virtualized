@@ -81,7 +81,6 @@ type Props = {
 
   /** Responsible for rendering a cell given an row and column index.  */
   cellRenderer: CellRenderer,
-  stickyContentCellRenderer: CellRenderer,
 
   /** Responsible for rendering a group of cells given their index ranges.  */
   cellRangeRenderer: CellRangeRenderer,
@@ -963,7 +962,7 @@ class Grid extends React.PureComponent<Props, State> {
 
   render() {
     const {
-      autoContainerWidth,
+      //autoContainerWidth,
       autoHeight,
       autoWidth,
       className,
@@ -1036,7 +1035,6 @@ class Grid extends React.PureComponent<Props, State> {
       totalRowsHeight + horizontalScrollBarSize <= height ? 'hidden' : 'auto';
 
     const childrenToDisplay = this._childrenToDisplay;
-    const stickyContent = this._childrenStickyContentToDisplay;
 
     const showNoContentRenderer =
       childrenToDisplay.length === 0 && height > 0 && width > 0;
@@ -1062,9 +1060,9 @@ class Grid extends React.PureComponent<Props, State> {
               className="ReactVirtualized__Grid__innerScrollContainer"
               role={containerRole}
               style={{
-                width: autoContainerWidth ? 'auto' : totalColumnsWidth,
+                width: '100%', //autoContainerWidth ? 'auto' : totalColumnsWidth,
                 height: totalRowsHeight,
-                maxWidth: totalColumnsWidth,
+                minWidth: totalColumnsWidth,
                 maxHeight: totalRowsHeight,
                 overflow: 'hidden',
                 pointerEvents: isScrolling ? 'none' : '',
@@ -1076,7 +1074,6 @@ class Grid extends React.PureComponent<Props, State> {
           )}
           {showNoContentRenderer && noContentRenderer()}
         </div>
-        {stickyContent}
       </>
     );
   }
@@ -1090,7 +1087,6 @@ class Grid extends React.PureComponent<Props, State> {
     const {
       cellRenderer,
       cellRangeRenderer,
-      stickyContentCellRenderer,
       columnCount,
       deferredMeasurementCache,
       height,
@@ -1248,31 +1244,6 @@ class Grid extends React.PureComponent<Props, State> {
         visibleColumnIndices,
         visibleRowIndices,
       });
-
-      if (stickyContentCellRenderer) {
-        this._childrenStickyContentToDisplay = cellRangeRenderer({
-          cellCache: this._cellCache,
-          cellRenderer: stickyContentCellRenderer,
-          columnSizeAndPositionManager:
-            instanceProps.columnSizeAndPositionManager,
-          columnStartIndex,
-          columnStopIndex,
-          deferredMeasurementCache,
-          horizontalOffsetAdjustment,
-          isScrolling,
-          isScrollingOptOut,
-          parent: this,
-          rowSizeAndPositionManager: instanceProps.rowSizeAndPositionManager,
-          rowStartIndex,
-          rowStopIndex,
-          scrollLeft,
-          scrollTop,
-          styleCache: this._styleCache,
-          verticalOffsetAdjustment,
-          visibleColumnIndices,
-          visibleRowIndices,
-        });
-      }
 
       // update the indices
       this._columnStartIndex = columnStartIndex;
